@@ -7,16 +7,16 @@
 import re
 
 def shifter(shift):
-    while True:
-        try:
-            n = int(shift)
-            break
-        except ValueError:
-            #TODO sub for an exception, vs. print?
-            print("Only enter a numeric shift")
-    return shift
+    '''
+    confirm shift input is int, otherwise r -1 fail
+    '''
+    try:
+        n = int(shift)
+        return shift
+    except ValueError:
+        return -1
 
-#TODO refactor to make testable
+#TODO refactor to make testable (change print statement to exception)
 def plainTextInput():
 
     while True:
@@ -66,11 +66,14 @@ def processor():
             'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
             
 
-    shiftInput = input("Input shift value: ")
-    
-    shift = shifter(shiftInput)
-
-    print("Shift chosen:", shift)
+    while True:
+        shiftInput = input("Input shift value: ")
+        shift = shifter(shiftInput)
+        if shift == -1:
+            print("Only enter an integer")
+        else:
+            print("Shift chosen:", shift)
+            break
 
 
     plainText = plainTextInput()
