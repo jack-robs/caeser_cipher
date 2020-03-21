@@ -1,4 +1,5 @@
 # caeser encoder
+
 # removes spaces in ciphertext
 
 import re
@@ -45,7 +46,6 @@ def encoder(shift, plainText, alpha):
             cipherIndex = initIndex + int(shift)
             if cipherIndex > 25:
                 cipherIndex = cipherIndex % 25 - 1
-            print("Converting", plainChar, "at position", initIndex, "to position", cipherIndex)
             cipherChar = alpha[cipherIndex]
             cipherList.append(cipherChar)
 
