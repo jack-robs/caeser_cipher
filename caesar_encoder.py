@@ -17,30 +17,22 @@ def shifter(shift):
         return -1
 
 #TODO refactor to make testable (change print statement to exception)
-def plainTextInput():
-
-    while True:
-        plainText = input("Enter message, only alphabet no numbers, no punctuation: ")
-        plainText.lower()
-        result = bool(re.search(r'\d', plainText))
-        if result:
-            print("Enter message, no numbers, no puntuation.")
-        else:
-            break
-
-    return plainText
-
+def plainTextInput(plainText):
+    plainText.lower()
+    result = bool(re.search(r'\d', plainText))
+    if result:
+        print("Enter message, no numbers, no puntuation.")
+        return -1
+    else:
+        return 0
 
 def encoder(shift, plainText, alpha):
-
     plainList = list(plainText)
 
     cipherList = []
 
     for i in range(len(plainList)):
-        if plainList[i] == ' ':
-            pass
-        else:
+        try:
             plainChar = plainList[i].lower() 
             initIndex = alpha.index(plainChar)
             cipherIndex = initIndex + int(shift)
@@ -48,7 +40,8 @@ def encoder(shift, plainText, alpha):
                 cipherIndex = cipherIndex % 25 - 1
             cipherChar = alpha[cipherIndex]
             cipherList.append(cipherChar)
-
+        except ValueError:
+            pass
 
     cipher = ''.join(cipherList)
     return cipher
@@ -75,8 +68,14 @@ def processor():
             print("Shift chosen:", shift)
             break
 
-
-    plainText = plainTextInput()
+    while True:
+        plainText = input("Enter message, only alphabet no numbers, no punctuation: ")
+        plainTextScrub = plainTextInput(plainText)
+        if plainTextScrub == -1:
+            print("Enter only alpha chars. No num, no punctuation")
+        else:
+            print("Plain text entered:", plainText)
+            break
 
     cipherText = encoder(shift, plainText, alpha)
 
