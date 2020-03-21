@@ -11,7 +11,6 @@ def main():
     '''
 
     cipherText = caesar_encoder.processor()
-    print("Cipher in main:", cipherText)
 
 
 

@@ -2,26 +2,29 @@
 
 # removes spaces in ciphertext
 
+#TODO: build testable functions such that a test won't get caught in a while loop
+
 import re
 
-def shifter():
+def shifter(shift):
     while True:
-        shift = input("Input shift value: ")
         try:
             n = int(shift)
             break
         except ValueError:
+            #TODO sub for an exception, vs. print?
             print("Only enter a numeric shift")
     return shift
 
+#TODO refactor to make testable
 def plainTextInput():
 
     while True:
-        plainText = input("Enter message, only alphabet no numbers: ")
+        plainText = input("Enter message, only alphabet no numbers, no punctuation: ")
         plainText.lower()
         result = bool(re.search(r'\d', plainText))
         if result:
-            print("Enter message, no numbers")
+            print("Enter message, no numbers, no puntuation.")
         else:
             break
 
@@ -29,16 +32,13 @@ def plainTextInput():
 
 
 def encoder(shift, plainText, alpha):
+
     plainList = list(plainText)
-
-    print("List of plain text:", plainList)
-
 
     cipherList = []
 
     for i in range(len(plainList)):
         if plainList[i] == ' ':
-            print('blank')
             pass
         else:
             plainChar = plainList[i].lower() 
@@ -56,23 +56,31 @@ def encoder(shift, plainText, alpha):
 
 
 def processor(): 
+    '''
+    all inputs taken here, fed into mutator functions
+    - allows testing of individual mutator/processing fxns
+    '''
 
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
             'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 
             'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
             
-    shift = shifter()
-   
+
+    shiftInput = input("Input shift value: ")
+    
+    shift = shifter(shiftInput)
+
     print("Shift chosen:", shift)
 
 
     plainText = plainTextInput()
-    print("Plain text:", plainText)
 
     cipherText = encoder(shift, plainText, alpha)
+
     print("Original:", plainText)
     print("Shift:", shift)
     print("Cipher Text:", cipherText)
+
     return cipherText
 
 
